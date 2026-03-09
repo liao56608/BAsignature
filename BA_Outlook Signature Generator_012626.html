@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Email Signature Generator</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 40px;
+  }
+  .container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    max-width: 620px;
+    margin: auto;
+  }
+  .controls {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+  }
+  .controls input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  .copy-btn {
+    background: #3aae36;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 10px;
+  }
+  .copy-btn:hover {
+    background: #32962f;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="controls">
+    <strong>Personalize Details</strong>
+    <input id="name" value="Your Name">
+    <input id="title" value="Your Title">
+    <input id="email" value="youremail@bostonaesthetics.com">
+    <input id="phone" value="Your number">
+    <button class="copy-btn" onclick="copySignature()">Copy Signature</button>
+  </div>
+
+  <div id="signature-wrap">
+    <table cellpadding="0" cellspacing="0" border="0"
+           style="font-family:Arial, sans-serif; line-height:1.3;">
+
+      <!-- Top two-column section -->
+      <tr>
+        <!-- Left: centered logo -->
+        <td valign="middle" width="220">
+          <table cellpadding="0" cellspacing="0" border="0" height="100" width="220">
+            <tr>
+              <td align="center" valign="middle">
+                <a href="https://bostonaesthetics.com" target="_blank">
+                  <img src="https://bostonaesthetics.com.design.com.mk/en-US/wp-content/uploads/2024/12/BA-Logo-256.png"
+                       width="180"
+                       height="55"
+                       alt="Boston Aesthetics"
+                       style="display:block; border:0;">
+                </a>
+              </td>
+            </tr>
+          </table>
+        </td>
+
+        <!-- Divider -->
+        <td width="12" valign="middle">
+          <table cellpadding="0" cellspacing="0" border="0" height="60">
+            <tr>
+              <td width="1" bgcolor="#dddddd"></td>
+            </tr>
+          </table>
+        </td>
+
+        <!-- Right: personal info -->
+        <td valign="top">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td style="font-size:18px; font-weight:bold; color:#000000;">
+                <span id="out-name">Your Name</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="font-size:14px; color:#666666; padding-bottom:8px;">
+                <span id="out-title">Your Title</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="font-size:13px; color:#000000; line-height:1.6;">
+                <strong>Email:</strong>
+                <a id="out-email"
+                   href="mailto:youremail@bostonaesthetics.com"
+                   style="color:#000000; text-decoration:none;">
+                  youremail@bostonaesthetics.com
+                </a><br>
+                <strong>Phone:</strong>
+                <span id="out-phone">Your number</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <!-- tighter vertical spacing -->
+      <tr><td colspan="3" height="6"></td></tr>
+
+      <!-- Slogan + Social Icons -->
+      <tr>
+        <td width="220" valign="middle"
+            style="
+              font-size:15px;
+              font-weight:500;
+              color:#3aae36;
+              text-transform:uppercase;
+              letter-spacing:0.5px;
+              white-space:nowrap;
+            ">
+          BEAUTY WITH NO BOUNDARY
+        </td>
+
+        <td width="12"></td>
+
+        <td valign="middle">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td width="34" style="padding-right:8px;">
+                <a href="https://www.linkedin.com/company/bostonaesthetics/" target="_blank">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png"
+                       alt="LinkedIn"
+                       width="28"
+                       height="28"
+                       style="display:block; border:0;">
+                </a>
+              </td>
+              <td width="28">
+                <a href="https://www.instagram.com/boston_aesthetics_us/" target="_blank">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+                       alt="Instagram"
+                       width="28"
+                       height="28"
+                       style="display:block; border:0;">
+                </a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr><td colspan="3" height="10"></td></tr>
+
+      <!-- Address -->
+      <tr>
+        <td colspan="3"
+            style="
+              font-size:12px;
+              color:#888888;
+              line-height:1.4;
+              border-top:1px solid #eeeeee;
+              padding-top:8px;
+            ">
+          <strong style="color:#000000;">Boston Aesthetics</strong>
+          &nbsp;|&nbsp;
+          1 Peters Canyon, Suite 100, Irvine, CA 92606
+        </td>
+      </tr>
+
+    </table>
+  </div>
+</div>
+
+<script>
+  const bind = (inputId, outputId, isEmail) => {
+    document.getElementById(inputId).addEventListener('input', e => {
+      const el = document.getElementById(outputId);
+      if (isEmail) {
+        el.textContent = e.target.value;
+        el.href = "mailto:" + e.target.value;
+      } else {
+        el.textContent = e.target.value;
+      }
+    });
+  };
+
+  bind('name', 'out-name');
+  bind('title', 'out-title');
+  bind('email', 'out-email', true);
+  bind('phone', 'out-phone');
+
+  function copySignature() {
+    const range = document.createRange();
+    range.selectNode(document.getElementById("signature-wrap"));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand("copy");
+    alert("Signature copied! Paste into Outlook settings.");
+    window.getSelection().removeAllRanges();
+  }
+</script>
+
+</body>
+</html>
