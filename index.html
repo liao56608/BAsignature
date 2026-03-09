@@ -57,7 +57,7 @@
     <input id="name" value="Your Name">
     <input id="title" value="Your Title">
     <input id="email" value="youremail@bostonaesthetics.com">
-    <input id="phone" value="Your number">
+    <input id="phone" value="5555551234">
     <button class="copy-btn" onclick="copySignature()">Copy Signature</button>
   </div>
 
@@ -85,7 +85,7 @@
         </td>
 
         <!-- Divider -->
-        <td width="12" valign="middle">
+        <td width="15" valign="middle">
           <table cellpadding="0" cellspacing="0" border="0" height="60">
             <tr>
               <td width="1" bgcolor="#dddddd"></td>
@@ -115,7 +115,11 @@
                   youremail@bostonaesthetics.com
                 </a><br>
                 <strong>Phone:</strong>
-                <span id="out-phone">Your number</span>
+                <span id="out-phone">+1 (555) 555-1234</span><br>
+                <strong>Website:</strong>
+                <a href="https://BostonAesthetics.com" target="_blank" style="color:#000000; text-decoration:none;">
+                  BostonAesthetics.com
+                </a>
               </td>
             </tr>
           </table>
@@ -129,7 +133,7 @@
       <tr>
         <td width="220" valign="middle"
             style="
-              font-size:15px;
+              font-size:14px;
               font-weight:500;
               color:#3aae36;
               text-transform:uppercase;
@@ -144,44 +148,36 @@
         <td valign="middle">
           <table cellpadding="0" cellspacing="0" border="0">
             <tr>
-              <td width="34" style="padding-right:8px;">
-                <a href="https://www.linkedin.com/company/bostonaesthetics/" target="_blank">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png"
-                       alt="LinkedIn"
-                       width="28"
-                       height="28"
-                       style="display:block; border:0;">
-                </a>
-              </td>
-              <td width="28">
-                <a href="https://www.instagram.com/boston_aesthetics_us/" target="_blank">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-                       alt="Instagram"
-                       width="28"
-                       height="28"
-                       style="display:block; border:0;">
-                </a>
-              </td>
-            </tr>
+  <td width="28" style="padding-right:8px;">
+    <a href="https://www.linkedin.com/company/bostonaesthetics/" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png"
+           alt="LinkedIn"
+           width="28"
+           height="28"
+           style="display:block; border:0;">
+    </a>
+  </td>
+  <td width="28" style="padding-right:8px;">
+    <a href="https://www.instagram.com/boston_aesthetics_us/" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+           alt="Instagram"
+           width="28"
+           height="28"
+           style="display:block; border:0;">
+    </a>
+  </td>
+  <td width="28">
+    <a href="https://www.youtube.com/@boston_aesthetics_us" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png"
+           alt="YouTube"
+           width="28"
+           height="28"
+           style="display:block; border:0;">
+    </a>
+  </td>
+</tr>
+
           </table>
-        </td>
-      </tr>
-
-      <tr><td colspan="3" height="10"></td></tr>
-
-      <!-- Address -->
-      <tr>
-        <td colspan="3"
-            style="
-              font-size:12px;
-              color:#888888;
-              line-height:1.4;
-              border-top:1px solid #eeeeee;
-              padding-top:8px;
-            ">
-          <strong style="color:#000000;">Boston Aesthetics</strong>
-          &nbsp;|&nbsp;
-          1 Peters Canyon, Suite 100, Irvine, CA 92606
         </td>
       </tr>
 
@@ -190,14 +186,24 @@
 </div>
 
 <script>
-  const bind = (inputId, outputId, isEmail) => {
+  const bind = (inputId, outputId, isEmail, isPhone=false) => {
     document.getElementById(inputId).addEventListener('input', e => {
       const el = document.getElementById(outputId);
+      let val = e.target.value.trim();
       if (isEmail) {
-        el.textContent = e.target.value;
-        el.href = "mailto:" + e.target.value;
+        el.textContent = val;
+        el.href = "mailto:" + val;
+      } else if (isPhone) {
+        // Format phone as +1 (XXX) XXX-XXXX
+        val = val.replace(/\D/g,''); // remove non-digits
+        if (val.length === 10) {
+          val = `+1 (${val.slice(0,3)}) ${val.slice(3,6)}-${val.slice(6,10)}`;
+        } else if (val.length === 11 && val[0] === '1') {
+          val = `+1 (${val.slice(1,4)}) ${val.slice(4,7)}-${val.slice(7,11)}`;
+        }
+        el.textContent = val;
       } else {
-        el.textContent = e.target.value;
+        el.textContent = val;
       }
     });
   };
@@ -205,7 +211,7 @@
   bind('name', 'out-name');
   bind('title', 'out-title');
   bind('email', 'out-email', true);
-  bind('phone', 'out-phone');
+  bind('phone', 'out-phone', false, true);
 
   function copySignature() {
     const range = document.createRange();
