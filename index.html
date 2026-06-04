@@ -213,7 +213,7 @@
       const blob = new Blob([container.innerHTML], { type: "text/html" });
       const data = [new ClipboardItem({ "text/html": blob, "text/plain": container.innerText })];
       await navigator.clipboard.write(data);
-      alert("Signature copied! Paste into Outlook settings.");
+      alert("Signature copied! Paste into Outlook APP (Laptop/Desktop) or IOS Mail APP(Iphone) settings.");
     } catch (err) {
       // Fallback method
       const range = document.createRange();
