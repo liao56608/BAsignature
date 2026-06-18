@@ -190,8 +190,9 @@
         val = val.replace(/\D/g,''); 
         if (val.length === 10) {
           val = `+1 (${val.slice(0,3)}) ${val.slice(3,6)}-${val.slice(6,10)}`;
-        } else if (val.length === 11 && val[0] === '1') {
-          val = `+1 (${val.slice(1,4)}) ${val.slice(4,7)}-${val.slice(7,11)}`;
+        } else if (val.length === 11) {
+          // 11 digits now defaults to China (+86 XXX-XXXX-XXXX)
+          val = `+86 ${val.slice(0,3)}-${val.slice(3,7)}-${val.slice(7,11)}`;
         }
         el.textContent = val;
       } else {
